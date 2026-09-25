@@ -185,6 +185,8 @@ public class AdminService {
         return val;
     }
 
+
+
     private double readDouble() {
         while (!sc.hasNextDouble()) {
             System.out.print("Wrong input, enter a number: ");

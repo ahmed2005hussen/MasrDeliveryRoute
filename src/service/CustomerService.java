@@ -247,6 +247,8 @@ public class CustomerService {
         return val;
     }
 
+
+
     private double readDouble() {
         while (!sc.hasNextDouble()) {
             System.out.print("Wrong , enter a number: ");

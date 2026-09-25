@@ -21,6 +21,8 @@ public class PricingService {
 
         PromotionResult promotionResult = new PromotionResult(0.0, false);
 
+
+
         if (promotion != null) {
 
             PromotionContext context = new PromotionContext(subtotal, deliveryFee, order.getCustomer(), order.getAddress());
