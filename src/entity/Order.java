@@ -17,19 +17,22 @@ public class Order {
     private final LocalDateTime localDate;
     private OrderState orderState;
     private Rider rider;
+    private double totalPrice;
 
     public Order(Customer customer, Restaurant restaurant, Address address) {
-        this.orderId = generateIdService.generateId(customer.getCustomerName() + '-'
-                + restaurant.getRestaurantName());
         if (customer == null) throw new IllegalArgumentException("WRONG: customer can not be null");
         if (restaurant == null) throw new IllegalArgumentException("WRONG: restaurant can not be null");
         if (address == null) throw new IllegalArgumentException("WRONG: address can not be null");
+
+        this.orderId = generateIdService.generateId(customer.getCustomerName() + '-'
+                + restaurant.getRestaurantName());
         this.customer = customer;
         this.restaurant = restaurant;
         this.address = address;
         items = new HashMap<>();
         this.localDate = LocalDateTime.now();
         this.orderState = OrderState.PLACED;
+        this.totalPrice = 0.0;
     }
 
     public String getOrderId() {
@@ -88,6 +91,15 @@ public class Order {
         this.rider = rider;
     }
 
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        if (totalPrice < 0) throw new IllegalArgumentException("WRONG: total price can not be negative");
+        this.totalPrice = totalPrice;
+    }
+
     public void nextOp(OrderState newState) {
         if (newState == null) throw new IllegalArgumentException("WRONG: order state cannot be null");
         if (!isValidTransition(newState))
@@ -124,6 +136,7 @@ public class Order {
                 "   \nRestaurant: " + restaurant +
                 "   \nAddress: " + address +
                 "   \nItems: " + items +
+                "   \nTotal Price: " + totalPrice +
                 "   \nOrder Date: " + localDate +
                 "   \nOrder State: " + orderState +
                 "   \nRider: " + rider + '\n';
