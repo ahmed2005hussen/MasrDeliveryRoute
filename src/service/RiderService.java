@@ -10,7 +10,7 @@ public class RiderService {
     public List<Rider> riderList = new ArrayList<>();
 
     private ResturantService restaurantService;
-    private Rider currentRider; // simplified: single logged-in rider per session
+    private Rider currentRider;
 
     public RiderService(ResturantService restaurantService) {
         this.restaurantService = restaurantService;
@@ -51,8 +51,6 @@ public class RiderService {
         }
     }
 
-    // Picks up READY orders and assigns them to available riders.
-    // Gold customers jump the queue, everyone else is FIFO by placement time.
     public void assignReadyOrders() {
         List<Order> readyOrders = restaurantService.orders.stream()
                 .filter(o -> o.getOrderState() == OrderState.READY)

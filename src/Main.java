@@ -20,7 +20,7 @@ CustomerService customerService = new CustomerService(customer, resturantService
 
 AdminService adminService = new AdminService(resturantService, customerService, riderService);
 
-Rider rider = new Rider("Mohamed", VehicleType.MOTORCYCLE, new Address(District.DOKKI, "near square"), true, 0);
+Rider rider = new Rider("Mohamed", VehicleType.MOTORCYCLE, new Address(District.DOKKI, "dokki"), true, 0);
 
 
 int menu() {
@@ -146,7 +146,7 @@ void main() {
                 case 5 -> customerService.TrackOrder();
                 case 6 -> customerService.cancleOrder();
                 case 7 -> customerService.orderHistory();
-                default -> System.out.println("Wrong input, try again");
+                default -> System.out.println("Wrong , try again");
             }
 
 
@@ -166,7 +166,7 @@ void main() {
                 case 7 -> resturantService.removeMenuItem();
                 case 8 -> resturantService.AdjustDailyStock();
                 case 9 -> resturantService.viewTodayOrdersAndRevenue();
-                default -> System.out.println("Wrong input, try again");
+                default -> System.out.println("Wrong , try again");
             }
 
         } else if (choice == 3) {
@@ -179,7 +179,7 @@ void main() {
                 case 4 -> riderService.markOrderPickedUp();
                 case 5 -> riderService.markOrderDelivered();
                 case 6 -> riderService.viewDeliveryStatistics();
-                default -> System.out.println("Wrong input, try again");
+                default -> System.out.println("Wrong , try again");
 
             }
 
@@ -191,14 +191,14 @@ void main() {
                 case 3 -> adminService.createPromotion();
                 case 4 -> adminService.runReports();
                 case 5 -> adminService.platformStatistics();
-                default -> System.out.println("Wrong input, try again");
+                default -> System.out.println("Wrong , try again");
             }
 
         } else if (choice == 0) {
             System.out.println("Good bye!");
             break;
         } else {
-            System.out.println("Wrong input choice number between 0 - 4");
+            System.out.println("Wrong  choice number between 0 - 4");
         }
     }
 

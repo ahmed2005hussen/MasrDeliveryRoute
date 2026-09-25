@@ -72,14 +72,14 @@ public class CustomerService {
             }
 
             System.out.print("Enter quantity: ");
-            double qty = readDouble();
+            double quantitiy = readDouble();
 
-            if (qty <= 0) {
-                System.out.println("Quantity must be greater than zero");
+            if (quantitiy <= 0) {
+                System.out.println("Quantity must be positive ");
                 continue;
             }
 
-            items.merge(chosen, qty, Double::sum);
+            items.merge(chosen, quantitiy, Double::sum);
         }
 
         if (items.isEmpty()) {
@@ -88,7 +88,7 @@ public class CustomerService {
         }
 
         if (customer.getAddressList().isEmpty()) {
-            System.out.println("You have no saved address, add one first");
+            System.out.println("You have no saved address");
             return;
         }
 
@@ -102,7 +102,7 @@ public class CustomerService {
         int addrChoice = readInt();
 
         if (addrChoice < 1 || addrChoice > addresses.size()) {
-            System.out.println("Wrong address choice");
+            System.out.println("Wrong address ");
             return;
         }
 
@@ -113,13 +113,13 @@ public class CustomerService {
             order.addItem(entry.getKey(), entry.getValue());
         }
 
-        System.out.print("Enter promo code (or leave empty): ");
+        System.out.print("Enter promo code (or don't write): ");
         String promoCode = sc.nextLine();
         Promotion promotion = null;
         if (!promoCode.isBlank()) {
             promotion = restaurantService.findPromotion(promoCode);
             if (promotion == null) {
-                System.out.println("Promo code not found, ignoring promo");
+                System.out.println("Promo code not found");
             }
         }
 
@@ -139,8 +139,6 @@ public class CustomerService {
         System.out.println(order);
     }
 
-    // Rough distance matrix between districts (km), symmetric.
-    // Not real geography — just fixed numbers so pricing is reproducible.
     private static final Map<Set<District>, Double> DISTANCES = Map.ofEntries(
             Map.entry(Set.of(District.MAADI, District.DOKKI), 10.0),
             Map.entry(Set.of(District.MAADI, District.FAISAL), 12.0),
@@ -172,9 +170,9 @@ public class CustomerService {
 
         try {
             customer.withdrawalMoney(order.getTotalPrice());
-            System.out.println("Paid. New balance: " + customer.getWalletBalance());
+            System.out.println("Paid New balance: " + customer.getWalletBalance());
         } catch (IllegalArgumentException e) {
-            System.out.println("Insufficient funds: " + e.getMessage());
+            System.out.println("Insufficent fund: " + e.getMessage());
         }
     }
 
@@ -229,7 +227,7 @@ public class CustomerService {
             totalSpent += o.getTotalPrice();
         }
 
-        System.out.println("Lifetime total spent: " + totalSpent + " EGP");
+        System.out.println("Lifetime total : " + totalSpent + " EGP");
     }
 
     private Order findOrder(String orderId) {
@@ -241,7 +239,7 @@ public class CustomerService {
 
     private int readInt() {
         while (!sc.hasNextInt()) {
-            System.out.print("Wrong input, enter a number: ");
+            System.out.print("Wrong , enter a number: ");
             sc.next();
         }
         int val = sc.nextInt();
@@ -251,7 +249,7 @@ public class CustomerService {
 
     private double readDouble() {
         while (!sc.hasNextDouble()) {
-            System.out.print("Wrong input, enter a number: ");
+            System.out.print("Wrong , enter a number: ");
             sc.next();
         }
         double val = sc.nextDouble();

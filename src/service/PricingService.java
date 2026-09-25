@@ -19,7 +19,6 @@ public class PricingService {
 
         double serviceFee = Math.round(subtotal * SERVICE_FEE_RATE * 100.0) / 100.0;
 
-        // 4. Promotion
         PromotionResult promotionResult = new PromotionResult(0.0, false);
 
         if (promotion != null) {
