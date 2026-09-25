@@ -28,7 +28,6 @@ public class Customer {
         this.completeOrderCount = 0;
     }
 
-
     public String getCustomerId() {
         return customerId;
     }

@@ -139,12 +139,25 @@ public class CustomerService {
         System.out.println(order);
     }
 
-    // Not the real distance matrix required by the spec, just a rough
-    // placeholder so pricing has something to work with.
+    // Rough distance matrix between districts (km), symmetric.
+    // Not real geography — just fixed numbers so pricing is reproducible.
+    private static final Map<Set<District>, Double> DISTANCES = Map.ofEntries(
+            Map.entry(Set.of(District.MAADI, District.DOKKI), 10.0),
+            Map.entry(Set.of(District.MAADI, District.FAISAL), 12.0),
+            Map.entry(Set.of(District.MAADI, District.NASER_CITY), 15.0),
+            Map.entry(Set.of(District.MAADI, District.HELIOPOLIS), 20.0),
+            Map.entry(Set.of(District.DOKKI, District.FAISAL), 8.0),
+            Map.entry(Set.of(District.DOKKI, District.NASER_CITY), 18.0),
+            Map.entry(Set.of(District.DOKKI, District.HELIOPOLIS), 14.0),
+            Map.entry(Set.of(District.FAISAL, District.NASER_CITY), 20.0),
+            Map.entry(Set.of(District.FAISAL, District.HELIOPOLIS), 25.0),
+            Map.entry(Set.of(District.NASER_CITY, District.HELIOPOLIS), 6.0)
+    );
+
     private double distanceBetween(District from, District to) {
         if (from == null || to == null) return 5.0;
-        if (from == to) return 2.0;
-        return 8.0;
+        if (from == to) return 0.0;
+        return DISTANCES.getOrDefault(Set.of(from, to), 10.0);
     }
 
     public void payFromWallet() {

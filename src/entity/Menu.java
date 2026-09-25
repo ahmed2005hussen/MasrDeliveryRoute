@@ -51,4 +51,8 @@ public class Menu {
     public void setMenuItemList(List<MenuItem> menuItemList) {
         this.menuItemList = menuItemList;
     }
+
+    public String toString(){
+        return "Menu " + menuItemList.size() + " items: " + menuItemList;
+    }
 }

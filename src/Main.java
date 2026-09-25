@@ -1,13 +1,26 @@
+import entity.Address;
+import entity.Customer;
+import entity.District;
+import entity.Rider;
+import entity.VehicleType;
 import service.AdminService;
 import service.CustomerService;
 import service.ResturantService;
 import service.RiderService;
 
+import java.util.Scanner;
+
 Scanner sc = new Scanner(System.in);
-CustomerService customerService = new CustomerService();
-RiderService riderService = new RiderService();
-AdminService adminService = new AdminService();
+
 ResturantService resturantService = new ResturantService();
+RiderService riderService = new RiderService(resturantService);
+
+Customer customer = new Customer("Ahmed", "01012345678");
+CustomerService customerService = new CustomerService(customer, resturantService, riderService);
+
+AdminService adminService = new AdminService(resturantService, customerService, riderService);
+
+Rider rider = new Rider("Mohamed", VehicleType.MOTORCYCLE, new Address(District.DOKKI, "near square"), true, 0);
 
 
 int menu() {
@@ -114,10 +127,14 @@ int adminMenu() {
 
 void main() {
 
+    customer.addAddress(new Address(District.FAISAL, "Building 5, street 10"));
+    riderService.riderList.add(rider);
+    riderService.setCurrentRider(rider);
+
     while (true) {
         int choice = menu();
 
-        if (menu() == 1) {
+        if (choice == 1) {
 
             int c = customerMenu();
 
@@ -133,14 +150,17 @@ void main() {
             }
 
 
-        } else if (menu() == 2) {
+        } else if (choice == 2) {
             int c = restaurantMenu();
 
             switch (c) {
                 case 1 -> resturantService.acceptPendingOrder();
                 case 2 -> resturantService.rejectPendingOrder();
                 case 3 -> resturantService.markOrderPreparing();
-                case 4 -> resturantService.markOrderReady();
+                case 4 -> {
+                    resturantService.markOrderReady();
+                    riderService.assignReadyOrders();
+                }
                 case 5 -> resturantService.toggleItemAvailability();
                 case 6 -> resturantService.addMenuItem();
                 case 7 -> resturantService.removeMenuItem();
@@ -149,7 +169,7 @@ void main() {
                 default -> System.out.println("Wrong input, try again");
             }
 
-        } else if (menu() == 3) {
+        } else if (choice == 3) {
             int c = riderMenu();
 
             switch (c) {
@@ -163,7 +183,7 @@ void main() {
 
             }
 
-        } else if (menu() == 4) {
+        } else if (choice == 4) {
             int c = adminMenu();
             switch (c) {
                 case 1 -> adminService.addRestaurant();
@@ -174,7 +194,7 @@ void main() {
                 default -> System.out.println("Wrong input, try again");
             }
 
-        } else if (menu() == 0) {
+        } else if (choice == 0) {
             System.out.println("Good bye!");
             break;
         } else {
